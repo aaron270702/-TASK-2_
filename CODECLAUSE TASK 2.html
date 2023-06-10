@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact Form with CAPTCHA</title>
+  <style>
+    body {
+      background-color: lightblue;
+    }
+    .captcha {
+      font-family: Arial, sans-serif;
+    }
+    form {
+      text-align: center;
+    }
+  </style>
+  <script>
+    function validateForm() {
+      // Validate the CAPTCHA
+      var captchaInput = document.getElementById("captcha-input").value;
+      var captchaResult = document.getElementById("captcha-result").textContent;
+
+      if (captchaInput === captchaResult) {
+        // CAPTCHA is valid, form submission can proceed
+        alert("CAPTCHA validated. Form submission successful!");
+        return true;
+      } else {
+        // CAPTCHA is invalid, form submission is halted
+        alert("CAPTCHA validation failed. Please try again.");
+        return false;
+      }
+    }
+  </script>
+</head>
+<body>
+  <h2>Aaron Thalla's Contact Form for allocated Task 2</h2>
+  <form onsubmit="return validateForm()">
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name" required><br><br>
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" required><br><br>
+    <label for="message">Message:</label><br>
+    <textarea id="message" name="message" rows="4" required></textarea><br><br>
+    <div class="captcha">
+      <label for="captcha">Enter the CAPTCHA:</label><br>
+      <span id="captcha-result"></span><br>
+      <input type="text" id="captcha-input" name="captcha" required><br><br>
+      <button type="button" onclick="refreshCaptcha()">Refresh CAPTCHA</button>
+    </div>
+    <br>
+    <input type="submit" value="Submit">
+  </form>
+  
+  <script>
+    // Generate a random CAPTCHA on page load
+    document.addEventListener("DOMContentLoaded", function() {
+      refreshCaptcha();
+    });
+
+    // Refresh the CAPTCHA
+    function refreshCaptcha() {
+      var captchaResult = generateCaptcha();
+      document.getElementById("captcha-result").textContent = captchaResult;
+    }
+
+    // Generate a random CAPTCHA value
+    function generateCaptcha() {
+      var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      var captcha = "";
+      for (var i = 0; i < 6; i++) {
+        captcha += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+      return captcha;
+    }
+  </script>
+</body>
+</html>
